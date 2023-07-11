@@ -41,9 +41,9 @@ $downloadPath = Join-Path $env:USERPROFILE "Downloads\$fileName"
 Invoke-WebRequest -Uri $browser_download_url -OutFile $downloadPath
 
 # Remove old files in the Mods folder
-$modsFiles = Get-ChildItem -Path $modsFolderPath -File -Force
-if ($modsFiles) {
-    foreach ($file in $modsFiles) {
+$filesToDelete = Get-ChildItem -Path $modsFolderPath -File -Force | Where-Object {$_.Name -like 'laanp*'}
+if ($filesToDelete) {
+    foreach ($file in $filesToDelete) {
         Remove-Item -Path $file.FullName -Force
     }
 }
